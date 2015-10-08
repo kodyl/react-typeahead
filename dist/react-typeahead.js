@@ -99,7 +99,7 @@ fuzzy.match = function(pattern, string, opts) {
   pattern = opts.caseSensitive && pattern || pattern.toLowerCase();
 
   // For each character in the string, either add it to the result
-  // or wrap in template if its the next string in the pattern
+  // or wrap in template if it's the next string in the pattern
   for(var idx = 0; idx < len; idx++) {
     ch = string[idx];
     if(compareString[idx] === pattern[patternIdx]) {
@@ -141,8 +141,8 @@ fuzzy.match = function(pattern, string, opts) {
 //        // string to put after matching character
 //      , post:    '</b>'
 //
-//        // Optional function. Input is an element from the passed in
-//        // `arr`, output should be the string to test `pattern` against.
+//        // Optional function. Input is an entry in the given arr`,
+//        // output should be the string to test `pattern` against.
 //        // In this example, if `arr = [{crying: 'koala'}]` we would return
 //        // 'koala'.
 //      , extract: function(arg) { return arg.crying; }
@@ -150,31 +150,31 @@ fuzzy.match = function(pattern, string, opts) {
 fuzzy.filter = function(pattern, arr, opts) {
   opts = opts || {};
   return arr
-          .reduce(function(prev, element, idx, arr) {
-            var str = element;
-            if(opts.extract) {
-              str = opts.extract(element);
-            }
-            var rendered = fuzzy.match(pattern, str, opts);
-            if(rendered != null) {
-              prev[prev.length] = {
-                  string: rendered.rendered
-                , score: rendered.score
-                , index: idx
-                , original: element
-              };
-            }
-            return prev;
-          }, [])
+    .reduce(function(prev, element, idx, arr) {
+      var str = element;
+      if(opts.extract) {
+        str = opts.extract(element);
+      }
+      var rendered = fuzzy.match(pattern, str, opts);
+      if(rendered != null) {
+        prev[prev.length] = {
+            string: rendered.rendered
+          , score: rendered.score
+          , index: idx
+          , original: element
+        };
+      }
+      return prev;
+    }, [])
 
-          // Sort by score. Browsers are inconsistent wrt stable/unstable
-          // sorting, so force stable by using the index in the case of tie.
-          // See http://ofb.net/~sethml/is-sort-stable.html
-          .sort(function(a,b) {
-            var compare = b.score - a.score;
-            if(compare) return compare;
-            return a.index - b.index;
-          });
+    // Sort by score. Browsers are inconsistent wrt stable/unstable
+    // sorting, so force stable by using the index in the case of tie.
+    // See http://ofb.net/~sethml/is-sort-stable.html
+    .sort(function(a,b) {
+      var compare = b.score - a.score;
+      if(compare) return compare;
+      return a.index - b.index;
+    });
 };
 
 
@@ -347,7 +347,7 @@ var TypeaheadTokenizer = React.createClass({displayName: "TypeaheadTokenizer",
 
     // Remove token ONLY when bksp pressed at beginning of line
     // without a selection
-    var entry = this.refs.typeahead.refs.entry.getDOMNode();
+    var entry = this.refs.typeahead.refs.entry;
     if (entry.selectionStart == entry.selectionEnd &&
         entry.selectionStart == 0) {
       this._removeTokenForValue(
@@ -549,9 +549,9 @@ var Typeahead = React.createClass({displayName: "Typeahead",
       options: [],
       customClasses: {},
       allowCustomValues: 0,
-      defaultValue: "",
+      defaultValue: '',
       value: null,
-      placeholder: "",
+      placeholder: '',
       textarea: false,
       inputProps: {},
       onOptionSelected: function(option) {},
@@ -593,7 +593,7 @@ var Typeahead = React.createClass({displayName: "Typeahead",
   },
 
   setEntryText: function(value) {
-    this.refs.entry.getDOMNode().value = value;
+    this.refs.entry.value = value;
     this._onTextEntryUpdated();
   },
 
@@ -620,12 +620,12 @@ var Typeahead = React.createClass({displayName: "Typeahead",
   _renderIncrementalSearchResults: function() {
     // Nothing has been entered into the textbox
     if (!this.state.entryValue) {
-      return "";
+      return '';
     }
 
     // Something was just selected
     if (this.state.selection) {
-      return "";
+      return '';
     }
 
     return (
@@ -653,7 +653,7 @@ var Typeahead = React.createClass({displayName: "Typeahead",
   },
 
   _onOptionSelected: function(option, event) {
-    var nEntry = this.refs.entry.getDOMNode();
+    var nEntry = this.refs.entry;
     nEntry.focus();
 
     var displayOption = this._generateOptionToStringFor(this.props.displayOption);
@@ -670,7 +670,7 @@ var Typeahead = React.createClass({displayName: "Typeahead",
   },
 
   _onTextEntryUpdated: function() {
-    var value = this.refs.entry.getDOMNode().value;
+    var value = this.refs.entry.value;
     this.setState({visible: this.getOptionsForValue(value, this.props.options),
                    selection: null,
                    entryValue: value});
