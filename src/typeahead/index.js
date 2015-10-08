@@ -62,9 +62,9 @@ var Typeahead = React.createClass({
       options: [],
       customClasses: {},
       allowCustomValues: 0,
-      defaultValue: "",
+      defaultValue: '',
       value: null,
-      placeholder: "",
+      placeholder: '',
       textarea: false,
       inputProps: {},
       onOptionSelected: function(option) {},
@@ -106,7 +106,7 @@ var Typeahead = React.createClass({
   },
 
   setEntryText: function(value) {
-    this.refs.entry.getDOMNode().value = value;
+    this.refs.entry.value = value;
     this._onTextEntryUpdated();
   },
 
@@ -133,12 +133,12 @@ var Typeahead = React.createClass({
   _renderIncrementalSearchResults: function() {
     // Nothing has been entered into the textbox
     if (!this.state.entryValue) {
-      return "";
+      return '';
     }
 
     // Something was just selected
     if (this.state.selection) {
-      return "";
+      return '';
     }
 
     return (
@@ -166,7 +166,7 @@ var Typeahead = React.createClass({
   },
 
   _onOptionSelected: function(option, event) {
-    var nEntry = this.refs.entry.getDOMNode();
+    var nEntry = this.refs.entry;
     nEntry.focus();
 
     var displayOption = this._generateOptionToStringFor(this.props.displayOption);
@@ -183,7 +183,7 @@ var Typeahead = React.createClass({
   },
 
   _onTextEntryUpdated: function() {
-    var value = this.refs.entry.getDOMNode().value;
+    var value = this.refs.entry.value;
     this.setState({visible: this.getOptionsForValue(value, this.props.options),
                    selection: null,
                    entryValue: value});
